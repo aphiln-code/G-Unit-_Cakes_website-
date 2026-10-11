@@ -1,4 +1,19 @@
-# vinext-starter
+# G-Unit Cakes
+
+## Deploy to Vercel
+
+Import `aphiln-code/G-Unit-_Cakes_website-` and use the repository root (`./`).
+The committed `vercel.json` selects Next.js, runs `next build`, and uses `.next`
+as the output directory. Leave the install command at its default so Vercel
+uses the committed pnpm lockfile. The customer website requires no environment
+variables; order enquiries open WhatsApp directly.
+
+`tsconfig.next.json` checks the website separately from the optional Cloudflare
+worker and D1 examples. The existing `npm run dev`, `npm run build`, and
+`npm test` commands continue to use Vinext for the original Cloudflare workflow.
+To verify the Vercel build locally, run `pnpm exec next build`.
+
+## Original starter documentation
 
 A clean full-stack starter running on
 [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
