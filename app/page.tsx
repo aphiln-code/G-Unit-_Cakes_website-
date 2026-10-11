@@ -70,12 +70,50 @@ const initialOrder = {
 function BrandLockup({ light = false }: { light?: boolean }) {
   return (
     <span className={light ? "brand-lockup brand-lockup-light" : "brand-lockup"}>
-      <img src="/g-unit-cakes-logo.png" alt="" aria-hidden="true" />
-      <span>
-        <strong>G-Unit</strong>
-        <small>Cakes</small>
-      </span>
+      <img src="/g-unit-cakes-logo.png" alt="G-Unit Cakes" />
     </span>
+  );
+}
+
+type SocialNetwork = "instagram" | "tiktok" | "facebook" | "whatsapp";
+
+function SocialIcon({ network }: { network: SocialNetwork }) {
+  if (network === "instagram") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle className="icon-fill" cx="17.4" cy="6.6" r="1.1" />
+      </svg>
+    );
+  }
+
+  if (network === "tiktok") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M14 3v11.2a3.2 3.2 0 1 1-2.7-3.2" />
+        <path d="M14 3c.4 2.5 1.9 4 4.8 4.4" />
+      </svg>
+    );
+  }
+
+  if (network === "facebook") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          className="icon-fill"
+          d="M14.2 22v-8h2.8l.5-3.3h-3.3V8.6c0-1 .4-1.9 1.9-1.9h1.6V3.8c-.7-.1-1.5-.2-2.4-.2-2.8 0-4.8 1.7-4.8 4.9v2.2H7.3V14h3.2v8h3.7Z"
+        />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3.5 20.5l1.4-4.2a8.5 8.5 0 1 1 15.6-4.7Z" />
+      <path d="M8.3 7.5c.4 3.7 2.5 5.9 6.2 6.7" />
+      <path d="m8.3 7.5 1.6 2.1M14.5 14.2l2-1.3" />
+    </svg>
   );
 }
 
@@ -419,25 +457,45 @@ export default function Home() {
           <h2>See recent work, then tell us what you have in mind.</h2>
         </div>
         <div className="contact-links">
-          <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-            <span>Instagram</span>
-            <strong>@gunitcakes_10</strong>
-          </a>
-          <a href={TIKTOK_URL} target="_blank" rel="noreferrer">
-            <span>TikTok</span>
-            <strong>@gunit.cakes</strong>
-          </a>
-          <a href={FACEBOOK_URL} target="_blank" rel="noreferrer">
-            <span>Facebook</span>
-            <strong>G-Unit Cakes</strong>
+          <a
+            className="social-icon social-instagram"
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Instagram: @gunitcakes_10"
+            title="Instagram"
+          >
+            <SocialIcon network="instagram" />
           </a>
           <a
+            className="social-icon social-tiktok"
+            href={TIKTOK_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="TikTok: @gunit.cakes"
+            title="TikTok"
+          >
+            <SocialIcon network="tiktok" />
+          </a>
+          <a
+            className="social-icon social-facebook"
+            href={FACEBOOK_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Facebook: G-Unit Cakes"
+            title="Facebook"
+          >
+            <SocialIcon network="facebook" />
+          </a>
+          <a
+            className="social-icon social-whatsapp"
             href={`https://wa.me/${WHATSAPP_NUMBER}`}
             target="_blank"
             rel="noreferrer"
+            aria-label={`WhatsApp: ${WHATSAPP_DISPLAY}`}
+            title="WhatsApp"
           >
-            <span>WhatsApp</span>
-            <strong>{WHATSAPP_DISPLAY}</strong>
+            <SocialIcon network="whatsapp" />
           </a>
         </div>
       </section>

@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G-Unit Cakes | Custom Cakes & Orders</title>
+  <meta
+    name="description"
+    content="G-Unit Cakes custom cake ordering website concept with packaging mockups and special order brief."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@500;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* === Theme Tokens === */
+    :root {
+      --ink: #1f1d1d;
+      --charcoal: #2b2928;
+      --coral: #ee8d83;
+      --coral-deep: #c86d65;
+      --blush: #f9d8d4;
+      --cream: #fff8ef;
+      --ivory: #fffdf9;
+      --gold: #b98642;
+      --kraft: #b8895f;
+      --line: rgba(31, 29, 29, 0.14);
+      --shadow: 0 24px 70px rgba(31, 29, 29, 0.12);
+      --display: "Cormorant Garamond", Georgia, serif;
+      --body: "Manrope", Arial, sans-serif;
+    }
+
+    /* === Base === */
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 8% 10%, rgba(238, 141, 131, 0.24), transparent 24rem),
+        radial-gradient(circle at 92% 4%, rgba(185, 134, 66, 0.14), transparent 22rem),
+        linear-gradient(180deg, var(--ivory), var(--cream));
+      color: var(--ink);
+      font-family: var(--body);
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    /* === Header === */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 16px 0;
+      backdrop-filter: blur(18px);
+    }
+
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .brand-mini img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 44%;
+      background: #fff;
+      box-shadow: 0 10px 24px rgba(31, 29, 29, 0.08);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 249, 0.82);
+    }
+
+    nav a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: rgba(31, 29, 29, 0.72);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      background: var(--blush);
+      color: var(--ink);
+      outline: none;
+    }
+
+    /* === Hero === */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 0.98fr) minmax(340px, 1.02fr);
+      align-items: center;
+      gap: 56px;
+      width: min(1180px, calc(100% - 32px));
+      min-height: calc(100vh - 84px);
+      margin: 0 auto;
+      padding: 54px 0 92px;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--coral-deep);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1,
+    h2 {
+      color: var(--ink);
+      font-family: var(--display);
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 0.94;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin-bottom: 22px;
+      font-size: clamp(56px, 8vw, 106px);
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      font-size: clamp(40px, 5.2vw, 72px);
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .intro,
+    .section-copy,
+    .card p,
+    .order-copy p {
+      color: rgba(31, 29, 29, 0.72);
+      font-size: 18px;
+      line-height: 1.72;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 13px 18px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .primary {
+      background: var(--ink);
+      color: #fff;
+      box-shadow: 0 18px 40px rgba(31, 29, 29, 0.2);
+    }
+
+    .secondary {
+      border-color: var(--line);
+      background: rgba(255, 253, 249, 0.78);
+      color: var(--ink);
+    }
+
+    .logo-stage {
+      position: relative;
+      min-height: 600px;
+      display: grid;
+      place-items: center;
+    }
+
+    .logo-panel {
+      position: relative;
+      width: min(100%, 560px);
+      padding: 42px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 249, 0.9);
+      box-shadow: var(--shadow);
+    }
+
+    .logo-panel::after {
+      content: "Packaging-ready mark";
+      position: absolute;
+      right: 24px;
+      bottom: 22px;
+      color: var(--coral-deep);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero-logo {
+      width: 100%;
+      max-height: 440px;
+      object-fit: contain;
+    }
+
+    .flourish-card {
+      position: absolute;
+      left: 6%;
+      bottom: 8%;
+      width: 190px;
+      padding: 18px;
+      background: var(--ink);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .flourish-card strong {
+      display: block;
+      color: var(--blush);
+      font-family: var(--display);
+      font-size: 48px;
+      line-height: 0.9;
+    }
+
+    .flourish-card span {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    /* === Sections === */
+    .section {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 86px 0;
+    }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 34px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 44px;
+      align-items: start;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      min-height: 300px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 249, 0.72);
+    }
+
+    .card .price {
+      display: inline-flex;
+      margin-top: 20px;
+      color: var(--coral-deep);
+      font-weight: 900;
+    }
+
+    .cake-shape {
+      position: relative;
+      height: 138px;
+      margin-bottom: 26px;
+    }
+
+    .cake-shape::before {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 0;
+      height: 86px;
+      border: 1px solid rgba(31, 29, 29, 0.12);
+      border-top: 0;
+      background: var(--cream);
+    }
+
+    .cake-shape::after {
+      content: "";
+      position: absolute;
+      left: 6%;
+      right: 6%;
+      top: 18px;
+      height: 70px;
+      border-radius: 50%;
+      background: var(--blush);
+      border: 1px solid rgba(31, 29, 29, 0.12);
+    }
+
+    .chocolate::after {
+      background: #5c3228;
+    }
+
+    .garden::after {
+      background: #eab8b1;
+    }
+
+    .brand-rules {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .rule {
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 253, 249, 0.68);
+    }
+
+    .rule span {
+      display: block;
+      width: 36px;
+      height: 36px;
+      margin-bottom: 12px;
+      border-radius: 50%;
+      background: var(--coral);
+    }
+
+    .rule:nth-child(2) span {
+      background: var(--ink);
+    }
+
+    .rule:nth-child(3) span {
+      background: var(--gold);
+    }
+
+    .rule:nth-child(4) span {
+      background: var(--cream);
+      border: 1px solid var(--line);
+    }
+
+    .rule strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .rule small {
+      color: rgba(31, 29, 29, 0.62);
+      font-weight: 800;
+    }
+
+    /* === Order Form === */
+    .order-section {
+      display: grid;
+      grid-template-columns: 0.86fr 1.14fr;
+      gap: 42px;
+      align-items: start;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .step span {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--coral);
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .step p {
+      margin: 4px 0 0;
+      color: rgba(31, 29, 29, 0.72);
+      line-height: 1.55;
+    }
+
+    .order-form {
+      display: grid;
+      gap: 16px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    label {
+      display: grid;
+      gap: 8px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid rgba(31, 29, 29, 0.18);
+      background: var(--ivory);
+      color: var(--ink);
+      padding: 13px 14px;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--coral);
+      box-shadow: 0 0 0 4px rgba(238, 141, 131, 0.18);
+    }
+
+    textarea {
+      min-height: 148px;
+      resize: vertical;
+    }
+
+    .form-note {
+      margin: -4px 0 0;
+      color: rgba(31, 29, 29, 0.58);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    /* === Mockups === */
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    figure {
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 18px 46px rgba(31, 29, 29, 0.08);
+    }
+
+    figure img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+
+    figcaption {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      border-top: 1px solid var(--line);
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    figcaption span {
+      color: var(--coral-deep);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* === Contact === */
+    .contact {
+      display: grid;
+      grid-template-columns: 0.86fr 1.14fr;
+      gap: 36px;
+      align-items: center;
+      border-top: 1px solid var(--line);
+    }
+
+    .socials {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .socials a {
+      display: grid;
+      gap: 10px;
+      min-height: 120px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .socials span {
+      color: var(--coral-deep);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    footer {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 30px 0 46px;
+      border-top: 1px solid var(--line);
+      color: rgba(31, 29, 29, 0.62);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    /* === Motion === */
+    @media (prefers-reduced-motion: no-preference) {
+      .logo-panel,
+      .card,
+      figure,
+      .order-form {
+        animation: liftIn 0.8s ease both;
+      }
+
+      @keyframes liftIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
+
+    /* === Responsive === */
+    @media (max-width: 900px) {
+      .site-header {
+        position: static;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      nav {
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+      }
+
+      .hero,
+      .split,
+      .order-section,
+      .contact {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 28px;
+      }
+
+      .logo-stage {
+        min-height: auto;
+      }
+
+      .cards,
+      .brand-rules,
+      .mockup-grid,
+      .socials {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .brand-mini span {
+        font-size: 12px;
+      }
+
+      nav a {
+        padding: 9px 11px;
+        white-space: nowrap;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+
+      h2 {
+        font-size: 38px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .logo-panel,
+      .order-form {
+        padding: 20px;
+      }
+
+      .flourish-card {
+        position: static;
+        width: auto;
+        margin-top: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand-mini" href="#top" aria-label="G-Unit Cakes home">
+      <img src="assets/source-logo.png" alt="" />
+      <span>G-Unit Cakes</span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#cakes">Cakes</a>
+      <a href="#orders">Orders</a>
+      <a href="#packaging">Packaging</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Custom cakes, owner baked</p>
+        <h1>Celebration cakes with a logo that feels ready for the box.</h1>
+        <p class="intro">
+          A refined website concept for G-Unit Cakes using your specific whisk,
+          cake-swirl, coral, black, and gold logo direction. Built for cake
+          enquiries, special orders, and packaging that customers want to share.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#orders">Start a cake order</a>
+          <a class="button secondary" href="#packaging">View packaging</a>
+        </div>
+      </div>
+
+      <div class="logo-stage" aria-label="G-Unit Cakes logo preview">
+        <div class="logo-panel">
+          <img class="hero-logo" src="assets/source-logo.png" alt="G-Unit Cakes logo" />
+        </div>
+        <div class="flourish-card">
+          <strong>G</strong>
+          <span>Whisk mark, coral frosting, gold detail</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section split" id="brand">
+      <div>
+        <p class="eyebrow">Brand direction</p>
+        <h2>Elegant enough for gifting. Warm enough for birthdays.</h2>
+      </div>
+      <div>
+        <p class="section-copy">
+          The packaging now follows the logo you supplied: a black serif G-UNIT
+          wordmark, coral CAKES type, coral frosting flourish, and a warm gold
+          whisk handle. The website uses the same balance: clean white space,
+          soft coral moments, and a premium bakery feel.
+        </p>
+        <div class="brand-rules" aria-label="Brand palette">
+          <div class="rule"><span></span><strong>Coral</strong><small>frosting accents</small></div>
+          <div class="rule"><span></span><strong>Charcoal</strong><small>wordmark and contrast</small></div>
+          <div class="rule"><span></span><strong>Gold</strong><small>whisk handle detail</small></div>
+          <div class="rule"><span></span><strong>Ivory</strong><small>boxes and cards</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cakes">
+      <div class="section-head">
+        <p class="eyebrow">Cake menu starters</p>
+        <h2>Three cake styles to advertise first.</h2>
+        <p class="section-copy">
+          These are placeholders for now, but they give the site a realistic
+          ordering structure while the owner gathers final photos, flavors, and prices.
+        </p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="cake-shape"></div>
+          <h3>Signature Celebration</h3>
+          <p>Vanilla sponge, raspberry filling, coral drip, and piped cream detail.</p>
+          <span class="price">from R680</span>
+        </article>
+        <article class="card">
+          <div class="cake-shape chocolate"></div>
+          <h3>Chocolate Luxe</h3>
+          <p>Chocolate fudge layers, ganache finish, gold accents, and custom topper.</p>
+          <span class="price">from R720</span>
+        </article>
+        <article class="card">
+          <div class="cake-shape garden"></div>
+          <h3>Buttercream Garden</h3>
+          <p>Soft buttercream finish with floral piping for showers, birthdays, and gifting.</p>
+          <span class="price">from R640</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section order-section" id="orders">
+      <div class="order-copy">
+        <p class="eyebrow">Special-order brief</p>
+        <h2>Let customers describe the cake in their head.</h2>
+        <p>
+          The form collects the details the owner needs before quoting: date,
+          servings, flavor, budget, theme, wording, delivery area, and inspiration.
+          When you provide the WhatsApp number, the button can open a ready-to-send message.
+        </p>
+        <div class="steps">
+          <div class="step"><span>1</span><p>Customer shares event date, servings, and preferred cake style.</p></div>
+          <div class="step"><span>2</span><p>They describe colors, theme, wording, flavor, and budget.</p></div>
+          <div class="step"><span>3</span><p>The owner confirms availability, quote, and collection or delivery.</p></div>
+        </div>
+      </div>
+
+      <form class="order-form" id="orderForm">
+        <label>
+          Your name
+          <input id="name" name="name" placeholder="e.g. Thando" />
+        </label>
+        <div class="form-row">
+          <label>
+            Date needed
+            <input id="date" name="date" type="date" />
+          </label>
+          <label>
+            Servings
+            <input id="servings" name="servings" placeholder="e.g. 20" />
+          </label>
+        </div>
+        <div class="form-row">
+          <label>
+            Preferred flavor
+            <select id="flavor" name="flavor">
+              <option value="">Choose a flavor</option>
+              <option>Vanilla raspberry</option>
+              <option>Chocolate fudge</option>
+              <option>Red velvet</option>
+              <option>Lemon buttercream</option>
+              <option>Not sure yet</option>
+            </select>
+          </label>
+          <label>
+            Budget
+            <input id="budget" name="budget" placeholder="e.g. R900" />
+          </label>
+        </div>
+        <label>
+          Cake description
+          <textarea
+            id="details"
+            name="details"
+            placeholder="Theme, colors, wording, allergies, reference ideas, delivery area..."
+          ></textarea>
+        </label>
+        <button class="button primary" type="submit">Copy order summary</button>
+        <p class="form-note" id="formNote">
+          This copies a neat order summary for now. WhatsApp auto-send can be connected later.
+        </p>
+      </form>
+    </section>
+
+    <section class="section" id="packaging">
+      <div class="section-head">
+        <p class="eyebrow">Packaging mockups</p>
+        <h2>Future-use packaging built from the exact logo direction.</h2>
+        <p class="section-copy">
+          These boards show how the logo can live across boxes, stickers, cards,
+          sleeves, treat pouches, cake toppers, delivery bags, and social templates.
+        </p>
+      </div>
+      <div class="mockup-grid">
+        <figure>
+          <img src="assets/packaging-system.png" alt="G-Unit Cakes packaging system mockup" />
+          <figcaption>Packaging system <span>boxes, stickers, cards</span></figcaption>
+        </figure>
+        <figure>
+          <img src="assets/future-use-mockups.png" alt="G-Unit Cakes future-use brand mockups" />
+          <figcaption>Future-use applications <span>topper, labels, socials</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div>
+        <p class="eyebrow">Connect later</p>
+        <h2>Social and ordering links are ready for the real details.</h2>
+        <p class="section-copy">
+          Share the Instagram, WhatsApp number, and TikTok account when ready,
+          and these buttons can become live links.
+        </p>
+      </div>
+      <div class="socials">
+        <a href="#contact">Instagram <span>handle pending</span></a>
+        <a href="#contact">WhatsApp <span>number pending</span></a>
+        <a href="#contact">TikTok <span>handle pending</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    G-Unit Cakes website concept using the provided logo reference. Packaging mockups are saved for future use.
+  </footer>
+
+  <script>
+    const form = document.querySelector("#orderForm");
+    const note = document.querySelector("#formNote");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const values = {
+        name: document.querySelector("#name").value,
+        date: document.querySelector("#date").value,
+        servings: document.querySelector("#servings").value,
+        flavor: document.querySelector("#flavor").value,
+        budget: document.querySelector("#budget").value,
+        details: document.querySelector("#details").value,
+      };
+
+      const summary = [
+        "Hi G-Unit Cakes, I would like to order a cake.",
+        values.name ? `Name: ${values.name}` : "",
+        values.date ? `Date needed: ${values.date}` : "",
+        values.servings ? `Servings: ${values.servings}` : "",
+        values.flavor ? `Flavor: ${values.flavor}` : "",
+        values.budget ? `Budget: ${values.budget}` : "",
+        values.details ? `Cake idea: ${values.details}` : "",
+      ].filter(Boolean).join("\n");
+
+      try {
+        await navigator.clipboard.writeText(summary);
+        note.textContent = "Order summary copied. Paste it into WhatsApp or a message to the owner.";
+      } catch {
+        note.textContent = summary;
+      }
+    });
+  </script>
+</body>
+</html>

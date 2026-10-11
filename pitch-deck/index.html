@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G-Unit Cakes Pitch Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,500..900,60,1&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===========================================
+       CSS CUSTOM PROPERTIES (THEME)
+       Change these values to restyle the full deck.
+       =========================================== */
+    :root {
+      --stage-bg: #2b1712;
+      --slide-bg: #fffaf7;
+      --ink: #2b1712;
+      --cocoa: #4b2a22;
+      --berry: #c84c63;
+      --berry-dark: #9f3148;
+      --blush: #f6c6ca;
+      --cream: #fff4df;
+      --gold: #c8954b;
+      --sage: #8aa186;
+      --paper: #fffaf7;
+      --line: rgba(75, 42, 34, 0.16);
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "Manrope", sans-serif;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --duration-normal: 0.7s;
+    }
+
+    /* ===========================================
+       BASE RESET
+       Keeps the fixed slide canvas predictable.
+       =========================================== */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* ===========================================
+       FIXED 16:9 STAGE: MANDATORY BASE STYLES
+       Include this ENTIRE file in every presentation.
+       Slides are authored at 1920x1080 and scaled as a whole.
+       =========================================== */
+
+    /* 1. Lock the browser viewport */
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: var(--stage-bg, #000);
+    }
+
+    /* 2. Full-window deck viewport */
+    .deck-viewport {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        background: var(--stage-bg, #000);
+    }
+
+    /* 3. Fixed 16:9 design canvas.
+       JavaScript sets transform: translate(...) scale(...). */
+    .deck-stage {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        transform-origin: 0 0;
+        background: var(--slide-bg, #fff);
+    }
+
+    /* 4. Slides stack inside the fixed stage.
+       Content must be laid out at 1920x1080, not reflowed per device. */
+    .slide {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        background: var(--slide-bg, #fff);
+    }
+
+    .slide.active,
+    .slide.visible {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 1;
+    }
+
+    /* 5. Keep media inside authored slide bounds */
+    img,
+    video,
+    canvas,
+    svg {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    /* 6. Presentation chrome stays outside the slide design system */
+    .deck-controls {
+        position: fixed;
+        left: 50%;
+        bottom: 22px;
+        transform: translateX(-50%);
+        z-index: 1000;
+    }
+
+    /* 7. Print one fixed-size slide per page */
+    @media print {
+        html,
+        body {
+            width: 1920px;
+            height: auto;
+            overflow: visible;
+            background: #fff;
+        }
+
+        .deck-viewport {
+            position: static;
+            overflow: visible;
+            background: #fff;
+        }
+
+        .deck-stage {
+            position: static;
+            width: auto;
+            height: auto;
+            transform: none !important;
+            background: none;
+        }
+
+        .slide {
+            position: relative;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            width: 1920px;
+            height: 1080px;
+            break-after: page;
+            page-break-after: always;
+        }
+
+        .slide:last-child {
+            break-after: auto;
+            page-break-after: auto;
+        }
+
+        .deck-controls {
+            display: none !important;
+        }
+    }
+
+    /* 8. Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.2s !important;
+        }
+    }
+
+    /* ===========================================
+       DECK TYPOGRAPHY
+       Fixed-size type for the 1920x1080 slide stage.
+       =========================================== */
+    body {
+      color: var(--ink);
+      font-family: var(--font-body);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1,
+    h2 {
+      color: var(--cocoa);
+      font-family: var(--font-display);
+      font-weight: 800;
+      letter-spacing: 0;
+      line-height: 0.92;
+    }
+
+    h1 {
+      font-size: 156px;
+      max-width: 1120px;
+    }
+
+    h2 {
+      font-size: 108px;
+      max-width: 1080px;
+    }
+
+    h3 {
+      color: var(--cocoa);
+      font-family: var(--font-display);
+      font-size: 46px;
+      line-height: 1;
+    }
+
+    p,
+    li {
+      color: rgba(43, 23, 18, 0.74);
+      font-size: 31px;
+      line-height: 1.38;
+    }
+
+    .eyebrow {
+      color: var(--berry-dark);
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    /* ===========================================
+       SLIDE LAYOUT SYSTEM
+       Reusable positioning primitives for the pitch story.
+       =========================================== */
+    .slide {
+      padding: 76px;
+      background:
+        radial-gradient(circle at 14% 14%, rgba(246, 198, 202, 0.5), transparent 420px),
+        radial-gradient(circle at 88% 12%, rgba(200, 149, 75, 0.18), transparent 340px),
+        linear-gradient(135deg, #fffaf7 0%, #fff4df 100%);
+    }
+
+    .slide.dark {
+      background:
+        radial-gradient(circle at 14% 24%, rgba(200, 76, 99, 0.34), transparent 420px),
+        radial-gradient(circle at 86% 18%, rgba(200, 149, 75, 0.28), transparent 440px),
+        #2b1712;
+    }
+
+    .slide.dark h1,
+    .slide.dark h2,
+    .slide.dark h3 {
+      color: #fff4df;
+    }
+
+    .slide.dark p,
+    .slide.dark li {
+      color: rgba(255, 250, 247, 0.76);
+    }
+
+    .slide.dark .eyebrow {
+      color: #f6c6ca;
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 58px;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 68px;
+      align-items: center;
+      height: 810px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 28px;
+    }
+
+    .three-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 26px;
+      margin-top: 54px;
+    }
+
+    .two-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      margin-top: 48px;
+    }
+
+    .card {
+      min-height: 278px;
+      padding: 34px;
+      border: 2px solid var(--line);
+      background: rgba(255, 255, 255, 0.66);
+      box-shadow: 0 26px 70px rgba(75, 42, 34, 0.09);
+    }
+
+    .dark .card {
+      border-color: rgba(255, 244, 223, 0.16);
+      background: rgba(255, 244, 223, 0.08);
+      box-shadow: none;
+    }
+
+    .number {
+      display: grid;
+      place-items: center;
+      width: 64px;
+      height: 64px;
+      margin-bottom: 24px;
+      border-radius: 50%;
+      background: var(--berry-dark);
+      color: #fff;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .stat {
+      color: var(--berry-dark);
+      font-family: var(--font-display);
+      font-size: 116px;
+      font-weight: 900;
+      line-height: 0.9;
+    }
+
+    .dark .stat {
+      color: var(--blush);
+    }
+
+    .caption {
+      color: rgba(43, 23, 18, 0.58);
+      font-size: 22px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .dark .caption {
+      color: rgba(255, 244, 223, 0.58);
+    }
+
+    .footer-note {
+      position: absolute;
+      left: 76px;
+      bottom: 58px;
+      color: rgba(43, 23, 18, 0.48);
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .dark .footer-note {
+      color: rgba(255, 244, 223, 0.48);
+    }
+
+    /* ===========================================
+       WHISK-G LOGO ART
+       CSS-drawn logo for the deck title and closing slides.
+       =========================================== */
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .mark {
+      position: relative;
+      width: 176px;
+      height: 198px;
+      flex: 0 0 auto;
+    }
+
+    .mark.small {
+      width: 78px;
+      height: 88px;
+    }
+
+    .g-letter {
+      position: absolute;
+      left: 35px;
+      top: 10px;
+      z-index: 2;
+      color: var(--cocoa);
+      font-family: var(--font-display);
+      font-size: 148px;
+      font-weight: 750;
+      line-height: 1;
+    }
+
+    .dark .g-letter {
+      color: var(--cream);
+    }
+
+    .mark.small .g-letter {
+      left: 15px;
+      top: 4px;
+      font-size: 66px;
+    }
+
+    .wire {
+      position: absolute;
+      left: 4px;
+      top: 2px;
+      width: 126px;
+      height: 148px;
+      border: 7px solid currentColor;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-radius: 50% 50% 42% 50%;
+      color: var(--cocoa);
+      transform: rotate(-17deg);
+    }
+
+    .dark .wire {
+      color: var(--cream);
+    }
+
+    .mark.small .wire {
+      width: 56px;
+      height: 66px;
+      border-width: 3px;
+    }
+
+    .wire.two {
+      left: 19px;
+      top: 9px;
+      opacity: 0.72;
+    }
+
+    .wire.three {
+      left: 34px;
+      top: 17px;
+      opacity: 0.5;
+    }
+
+    .handle {
+      position: absolute;
+      left: 70px;
+      bottom: 2px;
+      width: 34px;
+      height: 68px;
+      border: 4px solid #7d4a25;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #d9a455, var(--gold));
+    }
+
+    .mark.small .handle {
+      left: 31px;
+      width: 15px;
+      height: 30px;
+      border-width: 2px;
+    }
+
+    .wordmark {
+      display: grid;
+      color: var(--cocoa);
+      font-family: var(--font-display);
+      font-size: 78px;
+      font-weight: 850;
+      line-height: 0.94;
+    }
+
+    .dark .wordmark {
+      color: var(--cream);
+    }
+
+    .wordmark span {
+      color: var(--berry-dark);
+      font-style: italic;
+    }
+
+    .dark .wordmark span {
+      color: var(--blush);
+    }
+
+    /* ===========================================
+       VISUAL DEVICES
+       Branded cake, order flow, and image presentation elements.
+       =========================================== */
+    .cake-hero {
+      position: relative;
+      width: 620px;
+      height: 620px;
+      margin-left: auto;
+    }
+
+    .cake-plate {
+      position: absolute;
+      left: 56px;
+      right: 56px;
+      bottom: 74px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 28px 50px rgba(75, 42, 34, 0.16);
+    }
+
+    .cake-body {
+      position: absolute;
+      left: 102px;
+      right: 102px;
+      bottom: 108px;
+      height: 286px;
+      border: 4px solid rgba(75, 42, 34, 0.16);
+      border-top: 0;
+      background: #fff2dc;
+    }
+
+    .cake-top {
+      position: absolute;
+      left: 82px;
+      right: 82px;
+      top: 190px;
+      height: 150px;
+      border: 4px solid rgba(75, 42, 34, 0.16);
+      border-radius: 50%;
+      background: #ffd8d5;
+    }
+
+    .drip {
+      position: absolute;
+      top: 0;
+      width: 44px;
+      height: 96px;
+      border-radius: 0 0 999px 999px;
+      background: var(--berry);
+    }
+
+    .drip:nth-child(1) {
+      left: 84px;
+    }
+
+    .drip:nth-child(2) {
+      left: 218px;
+      height: 128px;
+    }
+
+    .drip:nth-child(3) {
+      right: 82px;
+      height: 78px;
+    }
+
+    .swirl {
+      position: absolute;
+      top: 126px;
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 36% 36%, #fff, #ffd8d5 62%, #c84c63);
+      box-shadow: 112px 14px 0 #fff4df, 222px 8px 0 #f6c6ca, 324px 28px 0 #fff4df;
+    }
+
+    .order-diagram {
+      display: grid;
+      gap: 22px;
+    }
+
+    .flow-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 22px;
+      align-items: center;
+      padding: 24px;
+      border: 2px solid var(--line);
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .flow-icon {
+      display: grid;
+      place-items: center;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: var(--cocoa);
+      color: var(--cream);
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 900;
+    }
+
+    .browser-frame {
+      border: 3px solid rgba(75, 42, 34, 0.2);
+      background: #fff;
+      box-shadow: 0 34px 90px rgba(75, 42, 34, 0.15);
+    }
+
+    .browser-bar {
+      display: flex;
+      gap: 10px;
+      padding: 18px 24px;
+      border-bottom: 2px solid var(--line);
+      background: #fff4df;
+    }
+
+    .browser-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--berry);
+    }
+
+    .browser-dot:nth-child(2) {
+      background: var(--gold);
+    }
+
+    .browser-dot:nth-child(3) {
+      background: var(--sage);
+    }
+
+    .browser-screen {
+      padding: 34px;
+    }
+
+    .input-line {
+      height: 54px;
+      margin-bottom: 18px;
+      border: 2px solid var(--line);
+      background: #fffaf7;
+    }
+
+    .input-area {
+      height: 154px;
+      border: 2px solid var(--line);
+      background:
+        linear-gradient(rgba(200, 76, 99, 0.08), rgba(200, 76, 99, 0.08)),
+        #fffaf7;
+    }
+
+    .mockup-image {
+      width: 100%;
+      height: 760px;
+      object-fit: cover;
+      border: 3px solid rgba(75, 42, 34, 0.16);
+      box-shadow: 0 34px 90px rgba(75, 42, 34, 0.14);
+    }
+
+    .dark .mockup-image {
+      border-color: rgba(255, 244, 223, 0.18);
+      box-shadow: 0 34px 90px rgba(0, 0, 0, 0.28);
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .tag-list span {
+      padding: 18px 24px;
+      border: 2px solid var(--line);
+      background: var(--cream);
+      color: var(--cocoa);
+      font-size: 27px;
+      font-weight: 800;
+    }
+
+    .channel {
+      min-height: 336px;
+    }
+
+    .channel strong {
+      display: block;
+      margin-bottom: 20px;
+      color: var(--berry-dark);
+      font-size: 28px;
+      text-transform: uppercase;
+    }
+
+    .closing-list {
+      display: grid;
+      gap: 18px;
+      margin-top: 48px;
+      max-width: 980px;
+    }
+
+    .closing-list li {
+      list-style: none;
+      padding-left: 38px;
+      position: relative;
+    }
+
+    .closing-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 14px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--berry);
+    }
+
+    /* ===========================================
+       ANIMATIONS
+       Trigger via .visible class on the active slide.
+       =========================================== */
+    .reveal,
+    .reveal-left,
+    .reveal-scale {
+      opacity: 0;
+      transition:
+        opacity var(--duration-normal) var(--ease-out-expo),
+        transform var(--duration-normal) var(--ease-out-expo),
+        filter var(--duration-normal) var(--ease-out-expo);
+    }
+
+    .reveal {
+      transform: translateY(34px);
+    }
+
+    .reveal-left {
+      transform: translateX(-48px);
+    }
+
+    .reveal-scale {
+      transform: scale(0.94);
+      filter: blur(6px);
+    }
+
+    .slide.visible .reveal,
+    .slide.visible .reveal-left,
+    .slide.visible .reveal-scale {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+      filter: blur(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+    .delay-5 { transition-delay: 0.5s; }
+
+    .slide.visible .cake-hero {
+      animation: floatCake 5.4s ease-in-out infinite;
+    }
+
+    @keyframes floatCake {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-18px); }
+    }
+
+    /* ===========================================
+       PRESENTATION CONTROLS
+       Small browser-only controls outside slide content.
+       =========================================== */
+    .deck-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border: 1px solid rgba(255, 244, 223, 0.2);
+      border-radius: 999px;
+      background: rgba(43, 23, 18, 0.78);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: 14px;
+      backdrop-filter: blur(14px);
+    }
+
+    .deck-controls button,
+    .edit-toggle {
+      border: 0;
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--cocoa);
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .deck-controls button {
+      width: 34px;
+      height: 34px;
+    }
+
+    .progress-track {
+      width: 120px;
+      height: 7px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 244, 223, 0.24);
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      background: var(--blush);
+      transition: width 0.3s ease;
+    }
+
+    /* ===========================================
+       INLINE EDITING
+       Press E or use the top-left hotzone to edit slide text.
+       =========================================== */
+    .edit-hotzone {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10000;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+    }
+
+    .edit-toggle {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      z-index: 10001;
+      min-width: 96px;
+      height: 42px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .edit-toggle.show,
+    .edit-toggle.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    body.editing [data-editable] {
+      outline: 3px dashed rgba(200, 76, 99, 0.55);
+      outline-offset: 6px;
+      cursor: text;
+    }
+  </style>
+</head>
+<body>
+  <div class="deck-viewport">
+    <main class="deck-stage" id="deckStage" aria-label="G-Unit Cakes pitch deck">
+      <!-- ===========================================
+           SLIDE 1: TITLE
+           Sets the brand direction and emotional tone.
+           =========================================== -->
+      <section class="slide dark active visible">
+        <div class="topline">
+          <div class="brand-lockup reveal-left">
+            <div class="mark small" aria-hidden="true">
+              <span class="wire"></span><span class="wire two"></span><span class="wire three"></span><span class="g-letter">G</span><span class="handle"></span>
+            </div>
+            <div class="wordmark"><strong>G-Unit</strong><span>Cakes</span></div>
+          </div>
+          <p class="eyebrow reveal">Brand + website pitch</p>
+        </div>
+        <div class="content-grid">
+          <div class="stack">
+            <p class="eyebrow reveal">Owner-baked celebration cakes</p>
+            <h1 class="reveal delay-1" data-editable>Custom cakes made to feel personal before the first slice.</h1>
+            <p class="reveal delay-2" data-editable>A boutique bakery presence built around a memorable whisk-G logo, easy ordering, and packaging people want to post.</p>
+          </div>
+          <div class="cake-hero reveal-scale delay-3" aria-hidden="true">
+            <div class="swirl"></div>
+            <div class="cake-top"></div>
+            <div class="cake-body"><span class="drip"></span><span class="drip"></span><span class="drip"></span></div>
+            <div class="cake-plate"></div>
+          </div>
+        </div>
+        <p class="footer-note">G-Unit Cakes pitch deck</p>
+      </section>
+
+      <!-- ===========================================
+           SLIDE 2: OPPORTUNITY
+           Frames cakes as emotional, social purchases.
+           =========================================== -->
+      <section class="slide">
+        <div class="topline">
+          <p class="eyebrow reveal-left">The opportunity</p>
+          <div class="mark small reveal" aria-hidden="true">
+            <span class="wire"></span><span class="wire two"></span><span class="wire three"></span><span class="g-letter">G</span><span class="handle"></span>
+          </div>
+        </div>
+        <h2 class="reveal" data-editable>People are not only buying cake. They are buying a moment.</h2>
+        <div class="three-grid">
+          <article class="card reveal delay-1">
+            <div class="stat">01</div>
+            <h3 data-editable>Occasion-led demand</h3>
+            <p data-editable>Birthdays, baby showers, weddings, graduations, and office celebrations all need a visual centerpiece.</p>
+          </article>
+          <article class="card reveal delay-2">
+            <div class="stat">02</div>
+            <h3 data-editable>Personalization wins</h3>
+            <p data-editable>Customers want colors, themes, names, flavors, and sizes tailored to their exact event.</p>
+          </article>
+          <article class="card reveal delay-3">
+            <div class="stat">03</div>
+            <h3 data-editable>Social proof matters</h3>
+            <p data-editable>A beautiful cake and branded box become shareable content before the first review is written.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===========================================
+           SLIDE 3: BRAND IDEA
+           Explains the whisk-G logo concept.
+           =========================================== -->
+      <section class="slide">
+        <div class="content-grid">
+          <div class="stack">
+            <p class="eyebrow reveal-left">Brand idea</p>
+            <h2 class="reveal delay-1" data-editable>A whisk that becomes the G.</h2>
+            <p class="reveal delay-2" data-editable>The mark is simple enough for stickers, stamps, cake toppers, social avatars, and packaging, while still feeling ownable and connected to baking.</p>
+            <div class="tag-list reveal delay-3">
+              <span>Memorable</span>
+              <span>Warm</span>
+              <span>Practical</span>
+              <span>Premium</span>
+            </div>
+          </div>
+          <div class="card reveal-scale delay-2" style="display:grid;place-items:center;min-height:680px;">
+            <div class="brand-lockup">
+              <div class="mark" aria-hidden="true">
+                <span class="wire"></span><span class="wire two"></span><span class="wire three"></span><span class="g-letter">G</span><span class="handle"></span>
+              </div>
+              <div class="wordmark"><strong>G-Unit</strong><span>Cakes</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================
+           SLIDE 4: WEBSITE CONCEPT
+           Shows the core website promise.
+           =========================================== -->
+      <section class="slide dark">
+        <div class="topline">
+          <p class="eyebrow reveal-left">Website concept</p>
+          <p class="caption reveal">Advertise cakes + capture order intent</p>
+        </div>
+        <div class="content-grid">
+          <div class="stack">
+            <h2 class="reveal" data-editable>A site that turns cake inspiration into a ready-to-send brief.</h2>
+            <p class="reveal delay-1" data-editable>Visitors see the brand, browse starter cake styles, describe custom orders, then copy or send their order details to the owner.</p>
+          </div>
+          <div class="browser-frame reveal-scale delay-2">
+            <div class="browser-bar"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+            <div class="browser-screen">
+              <div class="input-line" style="width:58%;"></div>
+              <div class="input-line" style="width:82%;"></div>
+              <div class="input-line" style="width:72%;"></div>
+              <div class="input-area"></div>
+              <div class="input-line" style="width:42%;margin-top:24px;background:#9f3148;"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================
+           SLIDE 5: OFFER
+           Defines the first product story for the website.
+           =========================================== -->
+      <section class="slide">
+        <div class="topline">
+          <p class="eyebrow reveal-left">Cake offer</p>
+          <p class="caption reveal">Starter menu for faster decisions</p>
+        </div>
+        <h2 class="reveal" data-editable>Lead with three signature cake styles.</h2>
+        <div class="three-grid">
+          <article class="card reveal delay-1">
+            <div class="number">1</div>
+            <h3 data-editable>Signature Celebration</h3>
+            <p data-editable>Vanilla raspberry, Swiss meringue, berry drip, and bright event-ready styling.</p>
+          </article>
+          <article class="card reveal delay-2">
+            <div class="number">2</div>
+            <h3 data-editable>Chocolate Luxe</h3>
+            <p data-editable>Chocolate fudge, ganache finish, rich cocoa tones, and gold detail for premium orders.</p>
+          </article>
+          <article class="card reveal delay-3">
+            <div class="number">3</div>
+            <h3 data-editable>Buttercream Garden</h3>
+            <p data-editable>Lemon sponge, cream cheese, soft floral piping, and gentle pastel presentation.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===========================================
+           SLIDE 6: SPECIAL ORDER FLOW
+           Shows how customers describe dream cakes.
+           =========================================== -->
+      <section class="slide">
+        <div class="content-grid">
+          <div class="stack">
+            <p class="eyebrow reveal-left">Special orders</p>
+            <h2 class="reveal" data-editable>The form asks for the details that matter.</h2>
+            <p class="reveal delay-1" data-editable>It turns vague messages like “How much is a cake?” into useful briefs the owner can quote quickly.</p>
+          </div>
+          <div class="order-diagram">
+            <div class="flow-row reveal delay-1">
+              <div class="flow-icon">1</div>
+              <p data-editable>Date, servings, occasion, and delivery area.</p>
+            </div>
+            <div class="flow-row reveal delay-2">
+              <div class="flow-icon">2</div>
+              <p data-editable>Flavor, budget, colors, theme, and wording.</p>
+            </div>
+            <div class="flow-row reveal delay-3">
+              <div class="flow-icon">3</div>
+              <p data-editable>Copy summary now, connect WhatsApp auto-send later.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================
+           SLIDE 7: SOCIAL CHANNEL PLAN
+           Makes the placeholder links part of the launch plan.
+           =========================================== -->
+      <section class="slide dark">
+        <div class="topline">
+          <p class="eyebrow reveal-left">Social plan</p>
+          <p class="caption reveal">Links to connect when details are ready</p>
+        </div>
+        <h2 class="reveal" data-editable>Instagram creates desire. WhatsApp closes the order. TikTok builds reach.</h2>
+        <div class="three-grid">
+          <article class="card channel reveal delay-1">
+            <strong>Instagram</strong>
+            <h3 data-editable>Portfolio + proof</h3>
+            <p data-editable>Finished cakes, reels, customer reactions, behind-the-scenes piping, and seasonal launches.</p>
+          </article>
+          <article class="card channel reveal delay-2">
+            <strong>WhatsApp</strong>
+            <h3 data-editable>Fast ordering</h3>
+            <p data-editable>Pre-filled messages from the order form reduce back-and-forth and make quoting easier.</p>
+          </article>
+          <article class="card channel reveal delay-3">
+            <strong>TikTok</strong>
+            <h3 data-editable>Discovery</h3>
+            <p data-editable>Time-lapse decorating, flavor reveals, packaging moments, and event-day delivery clips.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===========================================
+           SLIDE 8: PRODUCT AND POST MOCKUPS
+           Uses the generated brand mockup board.
+           =========================================== -->
+      <section class="slide">
+        <div class="topline">
+          <p class="eyebrow reveal-left">Mockups</p>
+          <p class="caption reveal">Products + social post</p>
+        </div>
+        <div class="content-grid">
+          <div class="stack">
+            <h2 class="reveal" data-editable>The logo already works beyond the website.</h2>
+            <p class="reveal delay-1" data-editable>It can scale from a small seal on a cake box to a full campaign post promoting custom cakes.</p>
+          </div>
+          <img class="mockup-image reveal-scale delay-2" src="assets/product-and-post-mockups.png" alt="G-Unit Cakes product and social post mockup board" />
+        </div>
+      </section>
+
+      <!-- ===========================================
+           SLIDE 9: PACKAGING MOCKUPS
+           Uses the generated packaging board.
+           =========================================== -->
+      <section class="slide">
+        <div class="topline">
+          <p class="eyebrow reveal-left">Packaging</p>
+          <p class="caption reveal">Box, sticker, bag, sleeve, ribbon</p>
+        </div>
+        <div class="content-grid">
+          <img class="mockup-image reveal-scale" src="assets/packaging-mockups.png" alt="G-Unit Cakes packaging mockup board" />
+          <div class="stack">
+            <h2 class="reveal delay-1" data-editable>Packaging becomes part of the product experience.</h2>
+            <p class="reveal delay-2" data-editable>Branded boxes and stickers help the cake feel premium at handoff, while encouraging customers to photograph and share the order.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===========================================
+           SLIDE 10: LAUNCH PLAN
+           Turns the concept into immediate action.
+           =========================================== -->
+      <section class="slide">
+        <div class="topline">
+          <p class="eyebrow reveal-left">Launch plan</p>
+          <p class="caption reveal">What we need next</p>
+        </div>
+        <h2 class="reveal" data-editable>A focused launch can happen in three moves.</h2>
+        <div class="three-grid">
+          <article class="card reveal delay-1">
+            <div class="number">1</div>
+            <h3 data-editable>Approve the visual direction</h3>
+            <p data-editable>Refine the whisk-G logo, final colors, and wordmark into a clean production version.</p>
+          </article>
+          <article class="card reveal delay-2">
+            <div class="number">2</div>
+            <h3 data-editable>Add real business details</h3>
+            <p data-editable>Instagram, WhatsApp, TikTok, owner name, service area, pricing, and ordering terms.</p>
+          </article>
+          <article class="card reveal delay-3">
+            <div class="number">3</div>
+            <h3 data-editable>Replace placeholders with cake photos</h3>
+            <p data-editable>Use real baked cakes, customer packaging shots, and short videos for trust and conversion.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===========================================
+           SLIDE 11: CLOSE
+           Gives the pitch a clear decision point.
+           =========================================== -->
+      <section class="slide dark">
+        <div class="content-grid">
+          <div class="stack">
+            <p class="eyebrow reveal-left">The pitch</p>
+            <h1 class="reveal delay-1" data-editable>Make G-Unit Cakes easy to remember, easy to order, and easy to share.</h1>
+          </div>
+          <div class="stack reveal-scale delay-2">
+            <div class="brand-lockup">
+              <div class="mark small" aria-hidden="true">
+                <span class="wire"></span><span class="wire two"></span><span class="wire three"></span><span class="g-letter">G</span><span class="handle"></span>
+              </div>
+              <div class="wordmark"><strong>G-Unit</strong><span>Cakes</span></div>
+            </div>
+            <ul class="closing-list">
+              <li data-editable>Approve logo direction and brand palette.</li>
+              <li data-editable>Connect Instagram, WhatsApp, and TikTok.</li>
+              <li data-editable>Launch with the order form and mockup-backed packaging story.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-note">Ready for links, prices, and real cake photos</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- ===========================================
+       BROWSER PRESENTATION CHROME
+       Controls are outside the slide stage and do not print.
+       =========================================== -->
+  <div class="deck-controls" aria-label="Presentation controls">
+    <button type="button" id="prevBtn" aria-label="Previous slide">‹</button>
+    <span id="slideCount">1 / 11</span>
+    <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="progressFill"></div></div>
+    <button type="button" id="nextBtn" aria-label="Next slide">›</button>
+  </div>
+
+  <div class="edit-hotzone" aria-hidden="true"></div>
+  <button class="edit-toggle" id="editToggle" type="button" title="Edit mode (E)">Edit</button>
+
+  <script>
+    /* ===========================================
+       SLIDE PRESENTATION CONTROLLER
+       Handles scaling, keyboard navigation, touch, wheel, and progress.
+       =========================================== */
+    class SlidePresentation {
+      constructor() {
+        this.slides = Array.from(document.querySelectorAll(".slide"));
+        this.currentSlide = 0;
+        this.stage = document.getElementById("deckStage");
+        this.slideCount = document.getElementById("slideCount");
+        this.progressFill = document.getElementById("progressFill");
+        this.lastWheelTime = 0;
+        this.touchStartX = 0;
+        this.touchStartY = 0;
+        this.setupStageScale();
+        this.setupKeyboardNav();
+        this.setupTouchNav();
+        this.setupWheelNav();
+        this.setupButtons();
+        this.showSlide(0);
+      }
+
+      setupStageScale() {
+        const scale = () => {
+          const factor = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+          const x = (window.innerWidth - 1920 * factor) / 2;
+          const y = (window.innerHeight - 1080 * factor) / 2;
+          this.stage.style.transform = `translate(${x}px, ${y}px) scale(${factor})`;
+        };
+        scale();
+        window.addEventListener("resize", scale);
+      }
+
+      setupKeyboardNav() {
+        document.addEventListener("keydown", (event) => {
+          const editable = event.target && event.target.getAttribute("contenteditable") === "true";
+          if (editable) return;
+          if (["ArrowRight", " ", "PageDown"].includes(event.key)) {
+            event.preventDefault();
+            this.next();
+          }
+          if (["ArrowLeft", "PageUp"].includes(event.key)) {
+            event.preventDefault();
+            this.prev();
+          }
+          if (event.key === "Home") this.showSlide(0);
+          if (event.key === "End") this.showSlide(this.slides.length - 1);
+        });
+      }
+
+      setupTouchNav() {
+        window.addEventListener("touchstart", (event) => {
+          this.touchStartX = event.changedTouches[0].screenX;
+          this.touchStartY = event.changedTouches[0].screenY;
+        }, { passive: true });
+
+        window.addEventListener("touchend", (event) => {
+          const dx = event.changedTouches[0].screenX - this.touchStartX;
+          const dy = event.changedTouches[0].screenY - this.touchStartY;
+          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 60) {
+            dx < 0 ? this.next() : this.prev();
+          }
+        }, { passive: true });
+      }
+
+      setupWheelNav() {
+        window.addEventListener("wheel", (event) => {
+          const now = Date.now();
+          if (now - this.lastWheelTime < 700) return;
+          this.lastWheelTime = now;
+          event.deltaY > 0 ? this.next() : this.prev();
+        }, { passive: true });
+      }
+
+      setupButtons() {
+        document.getElementById("prevBtn").addEventListener("click", () => this.prev());
+        document.getElementById("nextBtn").addEventListener("click", () => this.next());
+      }
+
+      showSlide(index) {
+        this.currentSlide = Math.max(0, Math.min(index, this.slides.length - 1));
+        this.slides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === this.currentSlide);
+          slide.classList.toggle("visible", i === this.currentSlide);
+        });
+        this.slideCount.textContent = `${this.currentSlide + 1} / ${this.slides.length}`;
+        this.progressFill.style.width = `${((this.currentSlide + 1) / this.slides.length) * 100}%`;
+      }
+
+      next() {
+        this.showSlide(this.currentSlide + 1);
+      }
+
+      prev() {
+        this.showSlide(this.currentSlide - 1);
+      }
+    }
+
+    /* ===========================================
+       INLINE EDITOR
+       Enables quick text edits and stores them in localStorage.
+       =========================================== */
+    class InlineEditor {
+      constructor() {
+        this.isActive = false;
+        this.storageKey = "g-unit-cakes-pitch-edits";
+        this.editables = Array.from(document.querySelectorAll("[data-editable]"));
+        this.editables.forEach((element, index) => {
+          element.dataset.editId = `editable-${index}`;
+        });
+        this.load();
+      }
+
+      toggleEditMode() {
+        this.isActive = !this.isActive;
+        document.body.classList.toggle("editing", this.isActive);
+        document.getElementById("editToggle").classList.toggle("active", this.isActive);
+        document.getElementById("editToggle").textContent = this.isActive ? "Done" : "Edit";
+        this.editables.forEach((element) => {
+          element.setAttribute("contenteditable", this.isActive ? "true" : "false");
+        });
+        if (!this.isActive) this.save();
+      }
+
+      save() {
+        const payload = {};
+        this.editables.forEach((element) => {
+          payload[element.dataset.editId] = element.innerHTML;
+        });
+        localStorage.setItem(this.storageKey, JSON.stringify(payload));
+      }
+
+      load() {
+        const raw = localStorage.getItem(this.storageKey);
+        if (!raw) return;
+        const payload = JSON.parse(raw);
+        this.editables.forEach((element) => {
+          if (payload[element.dataset.editId]) element.innerHTML = payload[element.dataset.editId];
+        });
+      }
+    }
+
+    const deck = new SlidePresentation();
+    const editor = new InlineEditor();
+
+    /* ===========================================
+       EDIT HOTZONE AND SHORTCUTS
+       Hover top-left or press E to reveal editing.
+       =========================================== */
+    const hotzone = document.querySelector(".edit-hotzone");
+    const editToggle = document.getElementById("editToggle");
+    let hideTimeout = null;
+
+    hotzone.addEventListener("mouseenter", () => {
+      clearTimeout(hideTimeout);
+      editToggle.classList.add("show");
+    });
+
+    hotzone.addEventListener("mouseleave", () => {
+      hideTimeout = setTimeout(() => {
+        if (!editor.isActive) editToggle.classList.remove("show");
+      }, 400);
+    });
+
+    hotzone.addEventListener("click", () => editor.toggleEditMode());
+
+    editToggle.addEventListener("mouseenter", () => clearTimeout(hideTimeout));
+    editToggle.addEventListener("mouseleave", () => {
+      hideTimeout = setTimeout(() => {
+        if (!editor.isActive) editToggle.classList.remove("show");
+      }, 400);
+    });
+    editToggle.addEventListener("click", () => editor.toggleEditMode());
+
+    document.addEventListener("keydown", (event) => {
+      const editable = event.target && event.target.getAttribute("contenteditable") === "true";
+      if ((event.key === "e" || event.key === "E") && !editable) {
+        editor.toggleEditMode();
+      }
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
+        event.preventDefault();
+        editor.save();
+      }
+    });
+
+    window.addEventListener("beforeunload", () => editor.save());
+  </script>
+</body>
+</html>

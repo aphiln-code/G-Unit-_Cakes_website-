@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-labelledby="title desc">
+  <title id="title">G-Unit Cakes logo</title>
+  <desc id="desc">A G-Unit Cakes logo with a whisk forming a large G, coral frosting swirl, black serif wordmark, and gold whisk handle.</desc>
+  <defs>
+    <linearGradient id="goldHandle" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f5d99a"/>
+      <stop offset="42%" stop-color="#c99546"/>
+      <stop offset="100%" stop-color="#8a5a26"/>
+    </linearGradient>
+    <linearGradient id="coralCream" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffd5ce"/>
+      <stop offset="50%" stop-color="#ef9288"/>
+      <stop offset="100%" stop-color="#ca6a62"/>
+    </linearGradient>
+    <style>
+      .ink { fill: #232020; }
+      .ink-stroke { stroke: #232020; }
+      .coral { fill: #ee8d83; }
+      .coral-stroke { stroke: #ee8d83; }
+      .gold-stroke { stroke: #8a5a26; }
+      .display {
+        font-family: "Cormorant Garamond", "Didot", "Bodoni 72", Georgia, serif;
+        font-weight: 500;
+        letter-spacing: 28px;
+      }
+      .cakes {
+        font-family: "Cormorant Garamond", "Didot", "Bodoni 72", Georgia, serif;
+        font-weight: 500;
+        letter-spacing: 34px;
+      }
+    </style>
+  </defs>
+
+  <!-- Main monogram G -->
+  <text x="462" y="575" class="ink" font-family="Cormorant Garamond, Didot, Bodoni 72, Georgia, serif" font-size="455" font-weight="600">G</text>
+
+  <!-- Whisk wires forming the left of the G -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path class="ink-stroke" stroke-width="10" d="M243 96C106 132 58 292 156 414C220 494 345 484 426 396C496 321 482 198 405 132C360 94 302 81 243 96Z"/>
+    <path class="ink-stroke" stroke-width="7" opacity="0.82" d="M266 106C144 150 101 296 181 398C232 463 338 455 403 376C459 307 450 205 384 145C348 112 306 96 266 106Z"/>
+    <path class="ink-stroke" stroke-width="7" opacity="0.72" d="M296 112C188 164 151 302 210 386C251 444 337 434 385 358C427 291 419 210 364 152C343 130 320 116 296 112Z"/>
+    <path class="ink-stroke" stroke-width="6" opacity="0.64" d="M326 126C235 184 199 306 236 375C266 431 334 416 368 347C399 284 390 220 348 165C340 154 333 141 326 126Z"/>
+    <path class="ink-stroke" stroke-width="6" opacity="0.58" d="M357 145C289 211 255 310 270 370C287 433 339 397 353 330C365 272 371 207 357 145Z"/>
+  </g>
+
+  <!-- Whisk collar and handle -->
+  <g transform="rotate(-22 320 470)">
+    <rect x="276" y="416" width="82" height="52" rx="18" fill="#f9efd8" stroke="#232020" stroke-width="8"/>
+    <rect x="291" y="431" width="52" height="22" rx="10" fill="url(#goldHandle)" stroke="#8a5a26" stroke-width="4"/>
+    <path d="M300 458C268 520 236 586 213 652C207 671 217 694 237 702C257 710 280 700 289 681C317 617 345 552 375 489C383 470 372 450 352 444C333 439 310 441 300 458Z" fill="url(#goldHandle)" stroke="#232020" stroke-width="8"/>
+    <circle cx="252" cy="666" r="15" fill="#fff8ef" stroke="#8a5a26" stroke-width="6"/>
+    <path d="M326 474C298 534 273 597 249 657" fill="none" stroke="#f6d389" stroke-width="8" stroke-linecap="round" opacity="0.75"/>
+  </g>
+
+  <!-- Coral frosting swirl on the G -->
+  <g transform="translate(520 298)">
+    <path d="M18 166C64 90 125 50 206 48C169 72 151 97 144 128C181 88 223 67 270 69C229 91 210 119 207 153C238 127 272 112 308 114C274 139 247 167 225 200H0C4 188 10 176 18 166Z" fill="url(#coralCream)" stroke="#232020" stroke-width="7" stroke-linejoin="round"/>
+    <path d="M42 166C86 116 139 84 204 66" fill="none" stroke="#fff5f0" stroke-width="14" stroke-linecap="round" opacity="0.88"/>
+    <path d="M79 178C123 133 177 101 247 86" fill="none" stroke="#fff5f0" stroke-width="12" stroke-linecap="round" opacity="0.75"/>
+    <path d="M139 177C176 145 214 126 275 119" fill="none" stroke="#fff5f0" stroke-width="10" stroke-linecap="round" opacity="0.68"/>
+    <path class="coral-stroke" d="M56 86C45 67 51 47 70 41" fill="none" stroke-width="7" stroke-linecap="round"/>
+    <path class="coral-stroke" d="M103 41C93 20 102 4 123 0" fill="none" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="44" cy="116" r="12" class="coral" opacity="0.95"/>
+    <circle cx="111" cy="70" r="9" class="coral" opacity="0.8"/>
+    <circle cx="162" cy="32" r="10" class="coral" opacity="0.78"/>
+    <circle cx="229" cy="32" r="8" fill="#d2a45a" opacity="0.88"/>
+    <circle cx="281" cy="68" r="8" class="coral" opacity="0.7"/>
+    <circle cx="323" cy="109" r="7" fill="#d2a45a" opacity="0.85"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="102" y="862" class="ink display" font-size="142">G-UNIT</text>
+  <rect x="284" y="797" width="34" height="8" rx="4" fill="#ee8d83"/>
+
+  <!-- Decorative flourish and heart -->
+  <g fill="none" class="coral-stroke" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M314 930C386 890 455 905 506 925"/>
+    <path d="M686 925C736 905 812 890 886 930"/>
+    <path d="M314 930C388 962 461 954 518 930"/>
+    <path d="M674 930C731 954 811 962 886 930"/>
+    <path d="M572 923C546 893 502 917 547 954C562 967 586 978 600 995C614 978 638 967 653 954C698 917 654 893 628 923C612 942 588 942 572 923Z"/>
+  </g>
+
+  <text x="286" y="1080" class="coral cakes" font-size="98">CAKES</text>
+</svg>
